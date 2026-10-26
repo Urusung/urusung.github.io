@@ -81,7 +81,7 @@
 [data-slot=accordion-content] p{line-height:1.85}
 [data-slot=sidebar-menu-button]{min-height:2.35rem}
 [data-slot=sidebar-menu-button][data-active=true]{font-weight:600}
-[data-slot=button][aria-current]{background:var(--accent);color:var(--accent-foreground);font-weight:600;text-decoration:underline;text-underline-offset:4px}
+[data-slot=button][aria-current]{background:var(--accent);color:var(--accent-foreground);font-weight:600}
 [data-slot=button][aria-current] .text-muted-foreground{color:inherit}
 [data-slot=sidebar-menu-button] span:last-child{min-width:0}
 [data-slot=sidebar-trigger] .sr-only{display:none}
