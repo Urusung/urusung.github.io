@@ -1,0 +1,87 @@
+[
+  {
+    "name": "button",
+    "source": "https://ui.shadcn.com/r/styles/new-york-v4/button.json",
+    "registrySha256": "4b8d7d848742727973c1b088af8d15f0b628272a1316f2d2fa344e73ddff9e9c"
+  },
+  {
+    "name": "badge",
+    "source": "https://ui.shadcn.com/r/styles/new-york-v4/badge.json",
+    "registrySha256": "0f988b37cf1c56e7ecc83b1dcf24c9af4e73ce4341da5caf2c9d9b07a551319b"
+  },
+  {
+    "name": "card",
+    "source": "https://ui.shadcn.com/r/styles/new-york-v4/card.json",
+    "registrySha256": "c7ebaa49ba2a0613838558f3892c5007523c2dc26d6b36a244145d454a796106"
+  },
+  {
+    "name": "input",
+    "source": "https://ui.shadcn.com/r/styles/new-york-v4/input.json",
+    "registrySha256": "b1fffa12ba72ce30a291749012b47235eda110648b8106725ced22b5b31c8f1b"
+  },
+  {
+    "name": "select",
+    "source": "https://ui.shadcn.com/r/styles/new-york-v4/select.json",
+    "registrySha256": "ca3189ea8101a04f144b6d0f0e7330841639bfa5f4d57e7cca0894d39b30817b"
+  },
+  {
+    "name": "separator",
+    "source": "https://ui.shadcn.com/r/styles/new-york-v4/separator.json",
+    "registrySha256": "4242a9fe839cae9083acff1280b7cccfda10e97bbc83283aed12d2d12bebdc6a"
+  },
+  {
+    "name": "table",
+    "source": "https://ui.shadcn.com/r/styles/new-york-v4/table.json",
+    "registrySha256": "35a45f90ee92883533c4c1029212d38bd263694e90ea54fbfaf66a099f7d3cc4"
+  },
+  {
+    "name": "tabs",
+    "source": "https://ui.shadcn.com/r/styles/new-york-v4/tabs.json",
+    "registrySha256": "49320e6dcf56570753bb14ed3f5d66acf07d12e183c0e9024466995b25be5b1d"
+  },
+  {
+    "name": "accordion",
+    "source": "https://ui.shadcn.com/r/styles/new-york-v4/accordion.json",
+    "registrySha256": "93254d43d27259998b10c7bb5261f85bdc44509d46309a5c10a1e5d126a8d279"
+  },
+  {
+    "name": "dropdown-menu",
+    "source": "https://ui.shadcn.com/r/styles/new-york-v4/dropdown-menu.json",
+    "registrySha256": "235b1231cf71d94225eccd6c19117e7fa7b09cf256d23a199d63aee53265fd52"
+  },
+  {
+    "name": "sidebar",
+    "source": "https://ui.shadcn.com/r/styles/new-york-v4/sidebar.json",
+    "registrySha256": "421f1735955361a12466c5c6e7d4c1124cc7f76422b4fdd5dcdf8451b8ae4052"
+  },
+  {
+    "name": "sheet",
+    "source": "https://ui.shadcn.com/r/styles/new-york-v4/sheet.json",
+    "registrySha256": "bdf118300491675f05a9181af491217ba690929338aefd108437c2b07d25432f"
+  },
+  {
+    "name": "tooltip",
+    "source": "https://ui.shadcn.com/r/styles/new-york-v4/tooltip.json",
+    "registrySha256": "1b7b452b34beab05b22bd653963abd1c88ebd8e9ebcc89dcaebf4ac4938c929e"
+  },
+  {
+    "name": "skeleton",
+    "source": "https://ui.shadcn.com/r/styles/new-york-v4/skeleton.json",
+    "registrySha256": "1ed4d99f9d632d9697a054eefcd19932abd68cef7808407986f6e14da401edf7"
+  },
+  {
+    "name": "breadcrumb",
+    "source": "https://ui.shadcn.com/r/styles/new-york-v4/breadcrumb.json",
+    "registrySha256": "18043f281e20e08fa017a3bba2b2dec462ebba2b0ebf9685b34225cf7b253bfa"
+  },
+  {
+    "name": "sonner",
+    "source": "https://ui.shadcn.com/r/styles/new-york-v4/sonner.json",
+    "registrySha256": "439c5d5256091829350d3136309f55f8ba788f1cc0f0dbad016ce6b5b2765488"
+  },
+  {
+    "name": "use-mobile",
+    "source": "https://ui.shadcn.com/r/styles/new-york-v4/use-mobile.json",
+    "registrySha256": "4cd4736a08751c89e2ebc10f9d329c430ddb6194f46bf848e5ed470c0407bca1"
+  }
+]
