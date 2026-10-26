@@ -50,8 +50,9 @@ function CompanyAI({ id, resume = false }: { id: string; resume?: boolean }) {
   if (!experience) return null
   const Heading = resume ? 'h3' : 'h2'
   return <section className="mt-7 mb-5 space-y-3 border-t pt-5">
-    <Heading className="section-title">AI 활용 공유</Heading>
+    <Heading className="section-title">AI 활용</Heading>
     <p className="copy-text text-muted-foreground">{experience.text}</p>
+    {!resume && id === 'plax' && <a href="#skills" className="action-link inline-flex items-center gap-2 text-sm font-medium">AI 개발·검수 사례 보기<ArrowRight className="size-4" aria-hidden="true"/></a>}
   </section>
 }
 function CompanyCareer({ route }: { route: Route }) {
@@ -69,13 +70,43 @@ function CompanyCareer({ route }: { route: Route }) {
     {section === 'projects' && <CompanyAI id={company.id}/>}
   </>
 }
+function AIDevelopment({ resume = false }: { resume?: boolean }) {
+  return <section className={resume ? 'subsection border-t pt-7' : 'space-y-7'} aria-labelledby="ai-development-title">
+    <div className="space-y-3">
+      <h2 id="ai-development-title" className="text-xl font-semibold">{P.ai.title}</h2>
+      <p className="copy-text text-muted-foreground">{P.ai.text}</p>
+    </div>
+    <div className="space-y-5 rounded-xl bg-muted/50 p-5 sm:p-6">
+      <h3 className="section-title">{P.ai.loop.title}</h3>
+      <ol className="grid gap-x-6 gap-y-5 sm:grid-cols-2 xl:grid-cols-4">
+        {P.ai.loop.steps.map((step, index) => <li key={step.title} className="space-y-2">
+          <h4 className="text-sm font-semibold"><span className="text-primary tabular-nums mr-2">{index + 1}.</span>{step.title}</h4>
+          <p className="text-sm leading-6 text-muted-foreground">{step.text}</p>
+        </li>)}
+      </ol>
+      <div className="space-y-2 border-t pt-5">
+        <h4 className="text-sm font-semibold">{P.ai.loop.case.title}</h4>
+        <p className="copy-text text-muted-foreground">{P.ai.loop.case.text}</p>
+      </div>
+    </div>
+    <div className="divide-y">
+      {P.ai.practices.map(practice => <article key={practice.title} className="py-6 first:pt-0 last:pb-0 grid gap-4 lg:grid-cols-[15rem_minmax(0,1fr)]">
+        <div className="space-y-3"><h3 className="section-title">{practice.title}</h3>{!resume && <Tags values={practice.tools}/>}</div>
+        <NoteList items={practice.actions}/>
+      </article>)}
+    </div>
+  </section>
+}
 function Skills() {
   return <>
-    <PageHead title="기술과 AI 활용" description="주로 Flutter와 React Native를 사용합니다. BLE 통신, 네이티브 플레이어 연동, 앱 업데이트와 오류 수집도 구현했습니다."/>
-    <div className="grid gap-4 lg:grid-cols-2">{P.skills.map(skill => <Card className="py-0" key={skill.title}><CardContent className="p-5 sm:p-6 space-y-4"><h2 className="section-title">{skill.title}</h2><Tags values={skill.tools}/><p className="text-sm leading-7 text-muted-foreground">{skill.experience}</p></CardContent></Card>)}</div>
+    <PageHead title="기술과 AI 활용" description="Flutter·React Native 앱 개발과 함께, AI 도구를 활용한 코드 품질 검수와 반복 작업 자동화를 진행했습니다."/>
+    <AIDevelopment/>
     <section className="subsection border-t pt-8">
-      <h2 className="text-xl font-semibold">{P.ai.title}</h2>
-      <p className="copy-text text-muted-foreground">{P.ai.text}</p>
+      <h2 className="text-xl font-semibold">사용 기술</h2>
+      <div className="grid gap-4 lg:grid-cols-2">{P.skills.map(skill => <Card className="py-0" key={skill.title}><CardContent className="p-5 sm:p-6 space-y-4"><h3 className="section-title">{skill.title}</h3><Tags values={skill.tools}/><p className="text-sm leading-7 text-muted-foreground">{skill.experience}</p></CardContent></Card>)}</div>
+    </section>
+    <section className="subsection border-t pt-8">
+      <h2 className="text-xl font-semibold">동료와의 공유·개인 프로젝트</h2>
       <div className="grid gap-4 lg:grid-cols-2">{P.ai.experiences.map(experience => {
         const company = P.companies.find(item => item.id === experience.company)!
         return <Card className="py-0" key={company.id}><CardContent className="p-5 sm:p-6 space-y-3">
@@ -96,7 +127,8 @@ function Resume() {
     {P.companies.map(company => <section className="subsection resume-company" key={company.id}><div className="border-b pb-4"><div className="flex flex-wrap items-baseline justify-between gap-2"><h2 className="text-xl font-semibold">{company.name}</h2><p className="text-sm text-muted-foreground">{company.period}</p></div><p className="text-sm text-muted-foreground mt-2">{company.role}</p><p className="copy-text mt-3">{company.summary}</p></div>{P.projects.filter(project => project.company === company.id).map(project => <article key={project.id} className="pt-3 pb-4 space-y-3"><h3 className="text-base font-semibold">{project.name}</h3><p className="text-xs text-muted-foreground">{project.period} · {project.platform}</p><p className="text-sm font-medium">{project.role}</p><NoteList items={project.actions}/></article>)}<CompanyAI id={company.id} resume/>{company.id === 'plax' && <section className="space-y-4 border-t pt-5"><h3 className="section-title">배포·운영</h3><p className="copy-text text-muted-foreground">{P.delivery.resume}</p>{P.practice.filter(item => item.id !== 'reviews').map(item => <article key={item.title} className="space-y-2 pb-3"><h4 className="text-sm font-medium">{item.title}</h4><p className="copy-text text-muted-foreground">{item.text}</p></article>)}</section>}</section>)}
 
     <section className="subsection border-t pt-7"><h2 className="section-title">기술</h2>{P.skills.map(skill => <div key={skill.title} className="text-sm leading-7"><strong className="font-medium">{skill.title}</strong><p className="text-muted-foreground">{skill.tools.join(' · ')}</p></div>)}</section>
-    <section className="subsection border-t pt-7"><h2 className="section-title">{P.ai.title}</h2><p className="copy-text text-muted-foreground">{P.ai.text}</p><p className="copy-text text-muted-foreground">{P.ai.example.text}</p></section>
+    <AIDevelopment resume/>
+    <section className="subsection border-t pt-7"><h2 className="section-title">{P.ai.example.name}</h2><p className="copy-text text-muted-foreground">{P.ai.example.text}</p></section>
   </div>
 }
 function NotFound() { return <><PageHead title="페이지를 찾을 수 없습니다" description="전체 경력에서 회사나 프로젝트를 선택해 주세요."/><Button asChild><a href="#career">전체 경력</a></Button></> }

@@ -14,7 +14,10 @@ for (const p of P.projects) {
 for (const s of P.strengths) keys(s, 'title text tags')
 for (const s of P.practice) keys(s, 'title tools text id role problem actions boundary')
 for (const s of P.skills) keys(s, 'title tools experience')
-keys(P.ai, 'title text experiences example'); keys(P.ai.example, 'name text tools steps')
+keys(P.ai, 'title text loop practices experiences example'); keys(P.ai.example, 'name text tools steps')
+keys(P.ai.loop, 'title steps case'); keys(P.ai.loop.case, 'title text')
+for (const step of P.ai.loop.steps) keys(step, 'title text')
+for (const practice of P.ai.practices) keys(practice, 'title tools actions')
 for (const experience of P.ai.experiences) {
   keys(experience, 'company text')
   assert.ok(P.companies.some(company => company.id === experience.company), 'AI experience must belong to a listed company')
