@@ -2,6 +2,8 @@
 
 Flutter·React Native 개발 경력과 회사별 프로젝트를 정리한 사이트입니다. React, TypeScript, Vite, Tailwind CSS와 shadcn/ui로 만들었습니다.
 
+[포트폴리오 보기](https://urusung.github.io/)
+
 ## 로컬 실행
 
 Node.js 24에서 다음 명령을 실행합니다.
