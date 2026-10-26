@@ -34,7 +34,7 @@ export function MonthlyWork({ route }: { route: Route }) {
           </select>
         </div>
         <nav aria-label="작업 월 선택" className="hidden lg:flex flex-col gap-1 sticky top-24">
-          {[...P.timeline].reverse().map(item => <Button variant={selected.month === item.month ? 'secondary' : 'ghost'} asChild key={item.month} className="justify-between tabular-nums" size="sm"><a href={monthHref(item.month)} aria-current={selected.month === item.month ? 'date' : undefined}>{item.month.replace('-', '.')}<span className="text-[10px] text-muted-foreground" aria-label={`$작업 {item.work.length}건`}>{item.work.length}</span></a></Button>)}
+          {[...P.timeline].reverse().map(item => <Button variant={selected.month === item.month ? 'secondary' : 'ghost'} asChild key={item.month} className="justify-between tabular-nums" size="sm"><a href={monthHref(item.month)} aria-current={selected.month === item.month ? 'date' : undefined}>{item.month.replace('-', '.')}<span className="text-[10px] text-muted-foreground" aria-label={`작업 ${item.work.length}건`}>{item.work.length}</span></a></Button>)}
         </nav>
       </div>
       <div className="min-w-0">
@@ -76,7 +76,7 @@ export function MonthlyWork({ route }: { route: Route }) {
         <p className="note">{D.period} · 집계 기준일 {D.asOf}</p>
         <dl className="grid sm:grid-cols-2 gap-5">{D.personal.slice(0, 2).map(item => <div key={item.label}><dt className="text-xs text-muted-foreground">{item.label}</dt><dd className="mt-2"><span className="text-2xl font-semibold tabular-nums">{item.value}</span><span className="text-sm ml-1">{item.unit}</span><p className="note mt-1">{item.detail}</p></dd></div>)}</dl>
         <p className="note">PR·커밋은 작성한 기록, Expo는 배포한 기록을 집계했습니다. Shorebird·스토어는 담당 앱의 전체 운영 기록입니다. 2025년 10월은 23일부터, 2026년 10월은 26일까지입니다.</p>
-        <RecordsTable label="월별 개인 개발·배포와 프로젝트 배포 기록" headers={['월', '작성한 PR', '작성한 커밋', 'Expo OTA 배포', 'Shorebird 패치(앱 전체)', '스토어 배포(앱 전체)']} rows={D.monthly.map(row => [<a className="underline underline-offset-4" href={monthHref(row.month.replace('.', '-'))}>{row.month}</a>, row.prs, row.commits, row.easPersonal, row.shorebird, row.store])}/>
+        <RecordsTable label="월별 개인 개발·배포와 프로젝트 배포 기록" headers={['월', '작성한 PR', '작성한 커밋', 'Expo OTA 배포', 'Shorebird 패치(앱 전체)', '스토어 배포(앱 전체)']} rows={D.monthly.map(row => [<a className="text-link" href={monthHref(row.month.replace('.', '-'))}>{row.month}</a>, row.prs, row.commits, row.easPersonal, row.shorebird, row.store])}/>
         <p className="note">단위는 건입니다. Expo는 iOS·Android가 같은 배포 그룹에 포함되면 합쳐 1건으로 셉니다.</p>
         <NoteList items={[...D.notes.slice(0, 2), D.notes.at(-1)!]}/>
       </AccordionContent></AccordionItem></Accordion>
