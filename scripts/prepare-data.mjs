@@ -11,7 +11,7 @@ for (const company of P.companies) {
   if (aiExperience) lines.push('AI 활용 공유', aiExperience.text, '')
   if (company.id === 'plax') {
     lines.push('배포·운영', '', P.delivery.resume, '')
-    for (const item of P.practice) lines.push(item.title, item.text, '')
+    for (const item of P.practice.filter(item => item.id !== 'reviews')) lines.push(item.title, item.text, '')
   }
 }
 lines.push('='.repeat(40), '기술', '')

@@ -102,6 +102,7 @@ function OperationSection({ item }: { item: Operation }) {
       <OperationField label="운영 기록"><OperationRecords title={item.title} records={item.records}/></OperationField>
       <OperationField label="기록 범위"><p className="note">{item.boundary}</p></OperationField>
     </div>
+    {item.id === 'reviews' && <Button asChild variant="outline" size="sm"><a href={projectHref('app-review-bot')}>앱 리뷰 봇 프로젝트 보기<ArrowRight aria-hidden="true"/></a></Button>}
   </section>
 }
 
