@@ -319,14 +319,47 @@
   ],
   "practice": [
     {
-      "title": "Expo OTA 배포와 업데이트 적용",
+      "id": "flutter-store",
+      "title": "Flutter · 스토어 빌드·제출",
+      "tools": ["Flutter", "Codemagic", "Shorebird", "App Store", "Google Play"],
+      "scope": "알플레이 기존 Flutter 앱",
+      "method": "Codemagic에서 Shorebird 릴리스 빌드를 만들고, iOS는 App Store Connect로, Android는 Google Play 프로덕션 트랙으로 제출하는 구성입니다.",
+      "role": "기존 Codemagic 릴리스·스토어 제출 설정 유지보수",
+      "problem": "기존 Codemagic 배포 과정에서 스토어 제출 옵션과 iOS 서명 설정을 수정했습니다.",
+      "actions": [
+        "지원하지 않는 App Store 설정을 제거하고 Google Play 제출 옵션을 수정했습니다.",
+        "iOS 위젯의 프로비저닝 프로파일을 빌드 설정에 추가했습니다."
+      ],
+      "text": "Codemagic에서 Shorebird 릴리스 빌드와 스토어 제출을 수행하는 기존 구성을 유지보수했습니다. App Store·Google Play 제출 옵션을 수정하고 iOS 위젯의 프로비저닝 프로파일을 추가했습니다.",
+      "boundary": "기존 Flutter 배포 과정의 설정 오류와 서명 설정을 수정한 작업입니다. 초기 파이프라인 도입은 포함하지 않습니다."
+    },
+    {
+      "id": "rn-store",
+      "title": "React Native · 스토어 빌드·제출",
+      "tools": ["React Native", "Expo", "EAS Build", "EAS Submit"],
+      "scope": "알플레이 · 스토리엔진 · 로맨틱플레이 · 멜로의 RN 앱 설정",
+      "method": "EAS Build로 앱별 iOS·Android 바이너리를 만들고, EAS Submit으로 App Store Connect와 Google Play에 업로드합니다. iOS 심사 제출·공개는 App Store Connect에서 별도로 진행합니다.",
+      "role": "앱별 EAS 빌드·스토어 제출 설정 구성",
+      "problem": "하나의 모노레포에서 여러 앱을 배포하므로, 앱별 빌드 환경과 스토어 제출 대상을 분리했습니다.",
+      "actions": [
+        "앱마다 development·preview·production 빌드 프로필과 업데이트 채널을 나눴습니다.",
+        "iOS 제출 대상을 앱별로 연결하고, Android는 내부 테스트·비공개 테스트·공개 테스트·프로덕션 트랙을 선택할 수 있도록 제출 프로필을 구성했습니다.",
+        "알플레이의 RN 전환에서는 기존 Flutter 앱을 업데이트할 수 있도록 앱 식별자와 Play 서명 설정을 맞췄습니다."
+      ],
+      "text": "EAS Build·Submit의 앱별 빌드·제출 설정을 구성했습니다. 개발·프리뷰·프로덕션 환경과 Google Play 제출 트랙을 나누고, 알플레이 RN 전환에서는 기존 Flutter 앱의 식별자·서명 설정을 맞췄습니다.",
+      "boundary": "4가지 앱의 빌드·제출 설정을 구성한 범위입니다. 빌드 성공·업로드·심사·스토어 공개는 각각 구분하며, 공개 횟수는 아래 앱·플랫폼별 기록으로 표시했습니다."
+    },
+    {
+      "title": "React Native · EAS Update 코드푸시",
       "tools": [
         "EAS Update",
         "Expo",
         "React Native"
       ],
-      "text": "앱별 OTA 배포를 설정하고, 업데이트 확인·다운로드·재시작 로직을 구현했습니다. 각 단계가 중복 실행되지 않도록 상태를 관리하고, 앱이 다시 활성화됐을 때 재시작 조건을 확인하도록 했습니다.",
+      "text": "앱별 채널과 runtimeVersion에 맞춰 EAS Update로 JS 번들·에셋을 배포했습니다. 업데이트 확인·다운로드·재시작이 중복 실행되지 않도록 상태를 관리하고, 앱 복귀 시 재시작 조건을 확인하는 로직을 구현했습니다.",
       "id": "expo",
+      "scope": "알플레이 · 스토리엔진 · 로맨틱플레이 · 멜로의 RN 앱",
+      "method": "앱별 채널에 JS 번들·에셋을 게시하고, 같은 runtimeVersion의 설치 앱에 적용합니다. fingerprint 정책으로 네이티브 호환성을 구분하며, 네이티브 코드가 바뀌면 새 스토어 빌드가 필요합니다.",
       "role": "OTA 배포 설정과 앱 내 업데이트 적용 로직 구현",
       "problem": "앱이 다시 활성화될 때 업데이트 확인·다운로드·재시작이 겹치거나, 네이티브 초기화가 끝나기 전에 재시작할 수 있었습니다.",
       "actions": [
@@ -337,18 +370,19 @@
       "boundary": "배포 기록과 앱 내 업데이트 적용 로직을 함께 정리했습니다. OTA 배포 건수는 모든 사용자에게 적용된 횟수를 뜻하지 않습니다."
     },
     {
-      "title": "Flutter·Shorebird 패치 배포",
+      "title": "Flutter · Shorebird 코드푸시",
       "tools": [
         "Shorebird",
         "Codemagic",
         "iOS · Android"
       ],
-      "text": "스토어 제출 옵션과 iOS 심볼 업로드 경로를 수정했습니다. SPM 전환에 맞춰 업로드 경로를 나누고, Android 패치만 다시 실행할 수 있도록 기존 워크플로를 보완했습니다.",
+      "text": "기존 스토어 릴리스에 Dart 코드 패치를 배포하는 Shorebird 워크플로를 유지보수했습니다. SPM 전환에 맞춰 iOS 심볼 업로드 경로를 나누고, Android 패치만 다시 실행할 수 있도록 보완했습니다.",
       "id": "flutter",
-      "role": "기존 Codemagic·Shorebird 배포 과정 유지보수",
-      "problem": "기존 배포 설정에서 스토어 제출 오류, iOS 심볼 업로드 경로, 플랫폼별 재시도 조건을 수정해야 했습니다.",
+      "scope": "알플레이 기존 Flutter 앱",
+      "method": "Codemagic에서 대상 릴리스 버전과 플랫폼을 지정해 Shorebird로 Dart 코드의 변경분을 패치합니다. 네이티브 코드나 Flutter 엔진 변경은 새 릴리스 빌드와 스토어 배포가 필요합니다.",
+      "role": "기존 Codemagic·Shorebird 패치 워크플로 유지보수",
+      "problem": "iOS 심볼 업로드 경로와 플랫폼별 재시도 조건이 빌드 환경에 맞도록 패치 설정을 수정했습니다.",
       "actions": [
-        "지원하지 않는 Codemagic 설정과 Google Play 제출 옵션을 수정했습니다.",
         "SPM 전환에 맞춰 심볼 업로드 경로를 나눴습니다. Debug·시뮬레이터 빌드에서는 업로드를 건너뛰고, 배포 환경에서 필요한 도구나 경로가 없으면 빌드를 실패 처리하도록 했습니다.",
         "Android NDK와 패치 실행 시간 설정을 보완하고, Android 패치만 다시 실행할 수 있게 했습니다."
       ],

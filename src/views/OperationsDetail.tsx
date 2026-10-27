@@ -13,10 +13,12 @@ type Operation = {
   id: string
   title: string
   tools: string[]
+  scope?: string
+  method?: string
   role: string
   problem: string
   actions: string[]
-  records: OperationRecord[]
+  records?: OperationRecord[]
   boundary: string
 }
 
@@ -24,17 +26,22 @@ function monitoringRecord(item: typeof D.monitoring[number], label = item.title)
   return { label, value: item.items.join(' · '), details: [item.period, item.note] }
 }
 
-const operations: Operation[] = [
+const storeOperations: Operation[] = [practice('flutter-store'), practice('rn-store')]
+const storeCount = D.store.reduce((sum, row) => sum + row.count, 0)
+const storeRecords: OperationRecord[] = D.store.map(row => ({
+  label: `${row.app} · ${row.platform}`,
+  value: `공개 ${row.count}건 · 배포일 평균 간격 ${row.gap}일`,
+  details: [row.period, row.note],
+}))
+
+const otaOperations: Operation[] = [
   {
-    id: 'store', title: '스토어 출시', tools: ['Codemagic', 'App Store', 'Google Play'],
-    role: '기존 스토어 제출 설정 유지보수',
-    problem: '기존 Codemagic 배포 과정에서 스토어 제출 설정 오류에 대응했습니다.',
-    actions: [practice('flutter').actions[0]],
+    ...practice('flutter'),
     records: [
-      { label: '전체 기록', value: `담당 앱의 스토어 배포 ${D.store.reduce((sum, row) => sum + row.count, 0)}건`, details: ['앱·플랫폼별로 집계했으며, 첫 출시와 후속 업데이트를 포함합니다.'] },
-      ...D.store.map(row => ({ label: `${row.app} · ${row.platform}`, value: `공개 ${row.count}건 · 배포일 평균 간격 ${row.gap}일`, details: [row.period, row.note] })),
+      { label: '앱 전체 기록', value: `알플레이 Flutter 앱의 패치 ${D.shorebird.count}건`, details: [D.shorebird.period] },
+      { label: '플랫폼별 패치', value: `Android ${D.shorebird.android}건 · iOS ${D.shorebird.ios}건`, details: [D.shorebird.note] },
+      { label: '배포 빈도', value: `배포한 날 ${D.shorebird.days}일 · 배포일 평균 간격 ${D.shorebird.gap}일`, details: [`패치 대상 릴리스 ${D.shorebird.bases}개`] },
     ],
-    boundary: '담당 앱의 스토어 공개 이력을 앱·플랫폼별로 집계했습니다. 심사 대기·중지·출시일 미확인 건과 테스트 배포는 제외했습니다.',
   },
   {
     ...practice('expo'),
@@ -45,16 +52,9 @@ const operations: Operation[] = [
     ],
     boundary: '기간·배포일·평균 간격은 위 업데이트 기록을 기준으로 계산했습니다. ' + practice('expo').boundary,
   },
-  {
-    ...practice('flutter'),
-    problem: 'iOS 심볼 업로드 경로와 플랫폼별 재시도 조건이 빌드 환경에 맞도록 배포 설정을 수정했습니다.',
-    actions: practice('flutter').actions.slice(1),
-    records: [
-      { label: '전체 기록', value: `담당 앱의 패치 기록 ${D.shorebird.count}건`, details: [`알플레이 · ${D.shorebird.period}`] },
-      { label: '플랫폼별 패치', value: `Android ${D.shorebird.android}건 · iOS ${D.shorebird.ios}건`, details: [D.shorebird.note] },
-      { label: '배포 빈도', value: `배포한 날 ${D.shorebird.days}일 · 배포일 평균 간격 ${D.shorebird.gap}일`, details: [`패치 대상 릴리스 ${D.shorebird.bases}개`] },
-    ],
-  },
+]
+
+const operations: Operation[] = [
   {
     ...practice('observability'),
     records: D.monitoring.slice(1).map(item => monitoringRecord(item)),
@@ -79,7 +79,7 @@ const operations: Operation[] = [
 
 function OperationField({ label, children }: { label: string; children: ReactNode }) {
   return <div className="grid gap-3 md:grid-cols-[104px_minmax(0,1fr)] md:gap-6">
-    <h4 className="text-xs font-medium text-muted-foreground leading-7">{label}</h4>
+    <p className="text-xs font-medium text-muted-foreground leading-7">{label}</p>
     <div className="min-w-0">{children}</div>
   </div>
 }
@@ -93,13 +93,16 @@ function OperationRecords({ title, records }: { title: string; records: Operatio
   </dl>
 }
 
-function OperationSection({ item }: { item: Operation }) {
+function OperationSection({ item, nested = false }: { item: Operation; nested?: boolean }) {
+  const Heading = nested ? 'h4' : 'h3'
   return <section className="py-8 sm:py-10 space-y-6" aria-labelledby={`operation-${item.id}`} data-operation={item.id}>
-    <div className="space-y-3"><h3 id={`operation-${item.id}`} className="text-lg font-semibold">{item.title}</h3><Tags values={item.tools}/></div>
+    <div className="space-y-3"><Heading id={`operation-${item.id}`} className="text-lg font-semibold">{item.title}</Heading><Tags values={item.tools}/></div>
     <div className="space-y-6">
+      {item.scope && <OperationField label="대상 앱"><p className="copy-text">{item.scope}</p></OperationField>}
+      {item.method && <OperationField label="배포 방식"><p className="copy-text">{item.method}</p></OperationField>}
       <OperationField label="담당 역할"><p className="copy-text font-medium">{item.role}</p></OperationField>
       <OperationField label="구현 내용"><div className="space-y-3"><p className="copy-text">{item.problem}</p><NoteList items={item.actions}/></div></OperationField>
-      <OperationField label="운영 기록"><OperationRecords title={item.title} records={item.records}/></OperationField>
+      {item.records && <OperationField label="운영 기록"><OperationRecords title={item.title} records={item.records}/></OperationField>}
       <OperationField label="기록 범위"><p className="note">{item.boundary}</p></OperationField>
     </div>
     {item.id === 'reviews' && <Button asChild variant="outline" size="sm"><a href={projectHref('app-review-bot')}>앱 리뷰 봇 프로젝트 보기<ArrowRight aria-hidden="true"/></a></Button>}
@@ -108,7 +111,26 @@ function OperationSection({ item }: { item: Operation }) {
 
 export function OperationsDetail() {
   return <>
-    <div className="mb-6"><h2 className="section-title">배포·운영</h2><p className="page-description">앱 업데이트를 배포하고, 오류·성능 수집 코드와 스토어 리뷰 수집 도구를 개발했습니다.</p><p className="note mt-2">집계 기준일 {D.asOf}</p></div>
+    <div className="mb-6"><h2 className="section-title">배포·운영</h2><p className="page-description">Flutter와 React Native의 스토어 배포·코드푸시를 각각 운영하고, 오류·성능 수집 코드와 스토어 리뷰 수집 도구를 개발했습니다.</p><p className="note mt-2">집계 기준일 {D.asOf}</p></div>
+    <section className="border-t pt-8" aria-labelledby="store-delivery-title">
+      <h3 id="store-delivery-title" className="text-xl font-semibold">스토어 출시</h3>
+      <p className="page-description">Flutter는 Codemagic 릴리스 워크플로를 유지보수하고, React Native는 앱별 EAS 빌드·제출 설정을 구성했습니다.</p>
+      <div className="divide-y">{storeOperations.map(item => <OperationSection item={item} key={item.id} nested/>)}</div>
+      <div className="mb-8 rounded-lg border px-4 sm:px-6">
+        <Accordion type="single" collapsible><AccordionItem value="store-records">
+          <AccordionTrigger className="text-sm font-medium">앱별 스토어 공개 기록 · {storeCount}건</AccordionTrigger>
+          <AccordionContent className="space-y-4">
+            <p className="note">앱·플랫폼별 공개 기록이며, Flutter·React Native별 배포 횟수로 나누지 않았습니다. 첫 출시와 후속 업데이트를 포함하며, 심사 대기·중지·출시일 미확인 건과 테스트 배포는 제외했습니다.</p>
+            <OperationRecords title="스토어 공개" records={storeRecords}/>
+          </AccordionContent>
+        </AccordionItem></Accordion>
+      </div>
+    </section>
+    <section className="border-t pt-8" aria-labelledby="ota-delivery-title">
+      <h3 id="ota-delivery-title" className="text-xl font-semibold">코드푸시 · OTA 업데이트</h3>
+      <p className="page-description">Flutter는 Shorebird로 릴리스별 Dart 패치를, React Native는 EAS Update로 런타임에 맞는 JS 번들·에셋을 배포합니다.</p>
+      <div className="divide-y">{otaOperations.map(item => <OperationSection item={item} key={item.id} nested/>)}</div>
+    </section>
     <div className="divide-y border-y">{operations.map(item => <OperationSection item={item} key={item.id}/>)}</div>
     <section className="mt-6"><Accordion type="single" collapsible><AccordionItem value="method"><AccordionTrigger className="text-sm font-medium">배포 기록 집계 기준</AccordionTrigger><AccordionContent><NoteList items={D.notes.slice(2)}/></AccordionContent></AccordionItem></Accordion></section>
     <div className="mt-6 flex flex-wrap gap-3"><Button asChild variant="outline"><a href={companyHref('plax', 'timeline')}>PR·커밋 및 월별 작업<ArrowRight aria-hidden="true"/></a></Button><Button asChild variant="ghost"><a href={projectHref('rn-platform')}>공통 플랫폼 구현 사례<ArrowRight aria-hidden="true"/></a></Button></div>
