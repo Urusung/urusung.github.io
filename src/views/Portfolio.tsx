@@ -66,7 +66,7 @@ function CompanyCareer({ route }: { route: Route }) {
     <dl className="grid gap-5 sm:grid-cols-3 meta-list border-y py-6"><div><dt>재직 기간</dt><dd>{company.period}</dd></div><div><dt>역할</dt><dd>{company.role}</dd></div><div><dt>서비스 분야</dt><dd>{company.domain}</dd></div></dl>
     <div className="mt-5"><Tags values={company.skills}/></div>
     {company.id === 'plax' && <nav aria-label="플랙스뉴럴랩스 경력 보기" className="flex flex-wrap gap-2 mt-7 pb-4 border-b">{[['projects', '프로젝트'], ['practice', '배포·운영'], ['timeline', '월별 작업']].map(([id, label]) => <Button key={id} size="sm" variant={section === id ? 'secondary' : 'ghost'} asChild><a href={companyHref(company.id, id === 'projects' ? '' : id)} aria-current={section === id ? 'page' : undefined}>{label}</a></Button>)}</nav>}
-    <div className="mt-7">{section === 'practice' ? <OperationsDetail/> : section === 'timeline' ? <MonthlyWork route={route}/> : <section className="space-y-4"><h2 className="section-title">프로젝트</h2><div className="grid gap-4 lg:grid-cols-2">{P.projects.filter(p => p.company === company.id).map(project => <ProjectCard key={project.id} project={project}/>)}</div></section>}</div>
+    <div className="mt-7">{section === 'practice' ? <OperationsDetail/> : section === 'timeline' ? <MonthlyWork route={route}/> : <section className="space-y-4"><h2 className="section-title">프로젝트</h2><div className="grid gap-4 xl:grid-cols-2">{P.projects.filter(p => p.company === company.id).map(project => <ProjectCard key={project.id} project={project}/>)}</div></section>}</div>
     {section === 'projects' && <CompanyAI id={company.id}/>}
   </>
 }
@@ -103,11 +103,11 @@ function Skills() {
     <AIDevelopment/>
     <section className="subsection border-t pt-8">
       <h2 className="text-xl font-semibold">사용 기술</h2>
-      <div className="grid gap-4 lg:grid-cols-2">{P.skills.map(skill => <Card className="py-0" key={skill.title}><CardContent className="p-5 sm:p-6 space-y-4"><h3 className="section-title">{skill.title}</h3><Tags values={skill.tools}/><p className="text-sm leading-7 text-muted-foreground">{skill.experience}</p></CardContent></Card>)}</div>
+      <div className="grid gap-4 xl:grid-cols-2">{P.skills.map(skill => <Card className="py-0" key={skill.title}><CardContent className="p-5 sm:p-6 space-y-4"><h3 className="section-title">{skill.title}</h3><Tags values={skill.tools}/><p className="text-sm leading-7 text-muted-foreground">{skill.experience}</p></CardContent></Card>)}</div>
     </section>
     <section className="subsection border-t pt-8">
       <h2 className="text-xl font-semibold">동료와의 공유·개인 프로젝트</h2>
-      <div className="grid gap-4 lg:grid-cols-2">{P.ai.experiences.map(experience => {
+      <div className="grid gap-4 xl:grid-cols-2">{P.ai.experiences.map(experience => {
         const company = P.companies.find(item => item.id === experience.company)!
         return <Card className="py-0" key={company.id}><CardContent className="p-5 sm:p-6 space-y-3">
           <h3 className="section-title"><a href={companyHref(company.id)} className="hover:underline underline-offset-4">{company.name}</a></h3>

@@ -55,7 +55,7 @@
       "period": "2024.12 — 2025.10",
       "role": "앱 개발 담당 · 팀원 · 정규직",
       "domain": "한국어 교육",
-      "summary": "KOKIRI와 TOPIK Buddy의 앱 개발을 담당했습니다. KOKIRI의 코드 구조·인증·데이터 연동을 정비하고, TOPIK Buddy는 기획부터 출시까지 맡았습니다.",
+      "summary": "KOKIRI와 TOPIK Buddy 앱을 개발했습니다. KOKIRI는 코드 구조·인증·데이터 연동을 정비했고, TOPIK Buddy는 기획부터 출시까지 맡았습니다.",
       "skills": [
         "Flutter",
         "RxDart",
@@ -303,7 +303,7 @@
       "context": "Thermosafer Cloud · SpO2 · XST600 · CMS SCAN · XGas",
       "role": "5개 앱 개발·출시 담당",
       "actions": [
-        "Thermosafer Cloud·SpO2·XST600·CMS SCAN·XGas 등 Flutter IoT 앱 5개를 개발·출시했습니다.",
+        "Thermosafer Cloud, SpO2, XST600, CMS SCAN, XGas 등 Flutter IoT 앱 5개를 개발하고 출시했습니다.",
         "SpO2에서는 Method Channel·Event Channel로 Flutter와 네이티브 BLE 통신을 연결했습니다."
       ],
       "company": "choice",
@@ -314,7 +314,7 @@
         "Event Channel"
       ],
       "cases": [],
-      "summary": "Thermosafer Cloud·SpO2·XST600·CMS SCAN·XGas 등 Flutter IoT 앱 5개를 개발·출시했습니다."
+      "summary": "Thermosafer Cloud, SpO2, XST600, CMS SCAN, XGas 등 Flutter IoT 앱 5개를 개발하고 출시했습니다."
     }
   ],
   "practice": [
@@ -542,7 +542,7 @@
         "title": "운영 오류 조사와 수정 후 추적을 자동화",
         "tools": ["Sentry", "Crashlytics", "예약 작업"],
         "actions": [
-          "Sentry 예약 조사에서 이전 기준선 대비 신규·재발·급증 이슈를 확인하고, 오류 스택을 코드와 대조하도록 했습니다. 릴리스·OTA 정보와 수집 상태를 함께 기록해 후속 조사에서 수정 효과와 재발을 추적했습니다.",
+          "Sentry 예약 조사에서 이전 기준선 대비 신규·재발·급증 이슈를 확인하고, 오류 스택을 코드와 대조하도록 했습니다. 릴리스와 OTA 정보, 수집 상태를 함께 기록해 후속 조사에서 수정 효과와 재발을 추적했습니다.",
           "수집이 끊긴 기간의 무발생을 해결로 판단하지 않고, 관측 사실과 원인 가설을 구분하도록 조사 규칙을 보완했습니다. 네 앱의 iOS·Android 오류를 평일에 조사하는 Crashlytics 예약 작업도 설정했습니다."
         ]
       },
@@ -854,7 +854,7 @@
     {
       "month": "2026-04",
       "title": "React Native 공통 플랫폼 구성, Flutter 운영 병행",
-      "summary": "pnpm·Turborepo 모노레포에서 두 앱의 코드와 설정을 분리했습니다. Flutter에서는 결제 복구·Repository 분리·네이티브 PiP·위젯과 가챠를 개발했습니다.",
+      "summary": "pnpm·Turborepo 모노레포에서 두 앱의 코드와 설정을 분리했습니다. Flutter에서는 결제 복구와 Repository 분리, 네이티브 PiP, 위젯과 가챠를 개발했습니다.",
       "work": [
         {
           "title": "pnpm·Turborepo 모노레포에서 두 앱 분리",
@@ -1112,7 +1112,7 @@
           "platforms": [
             "React Native"
           ],
-          "text": "Firebase Analytics와 기존 Observe 이벤트를 연결했습니다. 알림 열기, 콘텐츠 선택, 검색, 인증·결제 등 이용 흐름을 이벤트로 기록하도록 구성했습니다."
+          "text": "Firebase Analytics와 기존 Observe 이벤트를 연결했습니다. 알림 열기, 콘텐츠 선택, 검색, 인증, 결제 등 이용 흐름을 이벤트로 기록하도록 구성했습니다."
         },
         {
           "title": "Flutter 앱 안내와 라이브 레이드",
@@ -1201,7 +1201,7 @@
           "platforms": [
             "Flutter"
           ],
-          "text": "Codemagic 패치 워크플로에 NDK 버전을 지정하고 iOS 실행 여부를 입력으로 받도록 바꿨습니다. Android 패치를 다시 시도할 때 iOS 프로비저닝·CocoaPods·패치 단계를 건너뛸 수 있게 했습니다."
+          "text": "Codemagic 패치 워크플로에 NDK 버전을 지정하고 iOS 실행 여부를 입력받도록 했습니다. Android 패치 재시도 시에는 iOS 프로비저닝, CocoaPods, 패치 단계를 건너뛸 수 있도록 했습니다."
         }
       ]
     },
