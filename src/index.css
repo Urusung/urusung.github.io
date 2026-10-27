@@ -47,14 +47,14 @@
  --sidebar-accent:var(--accent);--sidebar-accent-foreground:var(--accent-foreground);
  --sidebar-border:oklch(1 0 0 / 10%);--sidebar-ring:var(--ring)
 }
-@layer base{*{@apply border-border outline-ring/50;}body{@apply bg-background text-foreground font-sans antialiased;overflow-wrap:anywhere}button,[role=button]{cursor:pointer}button:disabled{cursor:not-allowed}svg{flex-shrink:0}h1,h2,h3{word-break:keep-all;text-wrap:balance}p,li{word-break:keep-all;overflow-wrap:anywhere}a,button,input,[role=combobox],[role=tab]{scroll-margin-top:5rem}a:focus-visible{@apply outline-2 outline-offset-4 outline-ring rounded-sm}::selection{@apply bg-primary text-primary-foreground}html{scrollbar-color:var(--border) var(--background);scroll-padding-top:5rem}input{caret-color:var(--primary)}small{font-size:.75rem}}
+@layer base{*{@apply border-border outline-ring/50;}body{@apply bg-background text-foreground font-sans antialiased;overflow-wrap:anywhere}button,[role=button]{cursor:pointer}button:disabled{cursor:not-allowed}svg{flex-shrink:0}h1,h2,h3{word-break:keep-all;text-wrap:balance}p,li{word-break:keep-all;overflow-wrap:anywhere;text-wrap:pretty}a,button,input,[role=combobox],[role=tab]{scroll-margin-top:5rem}a:focus-visible{@apply outline-2 outline-offset-4 outline-ring rounded-sm}::selection{@apply bg-primary text-primary-foreground}html{scrollbar-color:var(--border) var(--background);scroll-padding-top:5rem}input{caret-color:var(--primary)}small{font-size:.75rem}}
 @layer components{
 .page-content{@apply min-w-0 px-4 py-7 sm:px-7 lg:px-9 lg:py-9;}
 .page-heading{@apply flex flex-wrap items-start justify-between gap-4 mb-8;}
 .page-title{@apply text-2xl sm:text-3xl font-semibold tracking-tight;}
-.page-description{@apply text-sm leading-6 text-muted-foreground mt-2 max-w-[74ch];}
+.page-description{@apply text-sm leading-6 text-muted-foreground mt-2 max-w-[72ic];}
 .section-title{@apply text-base font-semibold tracking-tight;}
-.copy-text{@apply text-sm leading-7 max-w-[74ch];}
+.copy-text{@apply text-sm leading-7 max-w-[72ic];}
 .subtle{@apply text-xs leading-5 text-muted-foreground;}
 .subsection{@apply mt-10 space-y-4;scroll-margin-top:6rem}
 .note{@apply text-xs text-muted-foreground leading-6;}
