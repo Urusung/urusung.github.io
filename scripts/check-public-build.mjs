@@ -27,7 +27,16 @@ for (const experience of P.ai.experiences) {
 }
 keys(P.delivery, 'asOf period personal store eas shorebird monthly notes monitoring resume')
 for (const r of P.delivery.personal) keys(r, 'label value unit detail')
-for (const r of P.delivery.store) keys(r, 'app platform count period gap note')
+for (const r of P.delivery.store) {
+  keys(r, 'framework app platform count period gap versions note')
+  assert.ok(['Flutter', 'React Native'].includes(r.framework), 'Every store record needs a verified framework')
+  assert.ok(r.count > 1 ? Number.isFinite(r.gap) : r.gap === null, 'A single store release has no average interval')
+}
+const storeTotals = Object.fromEntries(['Flutter', 'React Native'].map(framework => [
+  framework, P.delivery.store.filter(r => r.framework === framework).reduce((n, r) => n + r.count, 0),
+]))
+assert.deepEqual(storeTotals, { Flutter: 40, 'React Native': 39 })
+assert.equal(Object.values(storeTotals).reduce((n, count) => n + count, 0), P.delivery.monthly.reduce((n, r) => n + r.store, 0))
 for (const r of P.delivery.eas) keys(r, 'app count days period gap')
 assert.equal(P.delivery.eas.reduce((n, r) => n + r.count, 0), 79)
 keys(P.delivery.shorebird, 'count android ios days bases period gap note')

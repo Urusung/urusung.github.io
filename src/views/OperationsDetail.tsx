@@ -26,12 +26,25 @@ function monitoringRecord(item: typeof D.monitoring[number], label = item.title)
   return { label, value: item.items.join(' · '), details: [item.period, item.note] }
 }
 
-const storeOperations: Operation[] = [practice('flutter-store'), practice('rn-store')]
 const storeCount = D.store.reduce((sum, row) => sum + row.count, 0)
-const storeRecords: OperationRecord[] = D.store.map(row => ({
-  label: `${row.app} · ${row.platform}`,
-  value: `공개 ${row.count}건 · 배포일 평균 간격 ${row.gap}일`,
-  details: [row.period, row.note],
+const storeGroups = [
+  { id: 'flutter-store', framework: 'Flutter' },
+  { id: 'rn-store', framework: 'React Native' },
+].map(group => ({
+  ...group,
+  rows: D.store.filter(row => row.framework === group.framework),
+  count: D.store.filter(row => row.framework === group.framework).reduce((sum, row) => sum + row.count, 0),
+}))
+const storeOperations: Operation[] = storeGroups.map(group => ({
+  ...practice(group.id),
+  records: [
+    { label: '공개 기록 합계', value: `${group.framework} 앱의 스토어 공개 ${group.count}건`, details: ['앱·플랫폼별 공개 기록을 합산했습니다.'] },
+    ...group.rows.map(row => ({
+      label: `${row.app} · ${row.platform}`,
+      value: `공개 ${row.count}건${row.gap == null ? '' : ` · 배포일 평균 간격 ${row.gap}일`}`,
+      details: [row.period, `공개 버전 ${row.versions}`, row.note],
+    })),
+  ],
 }))
 
 const otaOperations: Operation[] = [
@@ -115,16 +128,9 @@ export function OperationsDetail() {
     <section className="border-t pt-8" aria-labelledby="store-delivery-title">
       <h3 id="store-delivery-title" className="text-xl font-semibold">스토어 출시</h3>
       <p className="page-description">Flutter는 Codemagic 릴리스 워크플로를 유지보수하고, React Native는 앱별 EAS 빌드·제출 설정을 구성했습니다.</p>
+      <p className="copy-text mt-4 font-medium tabular-nums">스토어 공개 {storeCount}건 · {storeGroups.map(group => `${group.framework} ${group.count}건`).join(' · ')}</p>
+      <p className="note mt-2">스토어 공개 버전·빌드 번호를 배포 기록과 대조해 구분했습니다. 심사 대기·중지·출시일 미확인 건과 테스트 배포는 제외했습니다.</p>
       <div className="divide-y">{storeOperations.map(item => <OperationSection item={item} key={item.id} nested/>)}</div>
-      <div className="mb-8 rounded-lg border px-4 sm:px-6">
-        <Accordion type="single" collapsible><AccordionItem value="store-records">
-          <AccordionTrigger className="text-sm font-medium">앱별 스토어 공개 기록 · {storeCount}건</AccordionTrigger>
-          <AccordionContent className="space-y-4">
-            <p className="note">앱·플랫폼별 공개 기록이며, Flutter·React Native별 배포 횟수로 나누지 않았습니다. 첫 출시와 후속 업데이트를 포함하며, 심사 대기·중지·출시일 미확인 건과 테스트 배포는 제외했습니다.</p>
-            <OperationRecords title="스토어 공개" records={storeRecords}/>
-          </AccordionContent>
-        </AccordionItem></Accordion>
-      </div>
     </section>
     <section className="border-t pt-8" aria-labelledby="ota-delivery-title">
       <h3 id="ota-delivery-title" className="text-xl font-semibold">코드푸시 · OTA 업데이트</h3>
